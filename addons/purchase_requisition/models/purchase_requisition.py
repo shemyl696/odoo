@@ -12,7 +12,7 @@ class PurchaseRequisition(models.Model):
     _order = "id desc"
 
     name = fields.Char(
-        string='Agreement', copy=False, readonly=True, required=True,
+        string='Agreement', copy=False, readonly=False, required=True,
         default=lambda self: _('New'))
     active = fields.Boolean('Active', default=True)
     reference = fields.Char(string='Reference')
