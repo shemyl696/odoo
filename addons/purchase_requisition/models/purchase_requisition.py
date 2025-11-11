@@ -131,10 +131,10 @@ class PurchaseRequisition(models.Model):
             raise UserError(_("You cannot confirm agreement '%(agreement)s' because it does not contain any product lines.", agreement=self.name))
         if self.requisition_type == 'blanket_order':
             for requisition_line in self.line_ids:
-                if requisition_line.price_unit <= 0.0:
-                    raise UserError(_('You cannot confirm a blanket order with lines missing a price.'))
-                if requisition_line.product_qty <= 0.0:
-                    raise UserError(_('You cannot confirm a blanket order with lines missing a quantity.'))
+                #if requisition_line.price_unit < 0.0:
+                    #raise UserError(_('You cannot confirm a blanket order with lines missing a price.'))
+                #if requisition_line.product_qty < 0.0:
+                    #raise UserError(_('You cannot confirm a blanket order with lines missing a quantity.'))
                 requisition_line._create_supplier_info()
         self.state = 'confirmed'
 
