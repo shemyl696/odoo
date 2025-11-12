@@ -88,10 +88,11 @@ class PurchaseRequisition(models.Model):
         for vals in vals_list:
             requisition_type = vals.get('requisition_type', defaults['requisition_type'])
             company_id = vals.get('company_id', defaults['company_id'])
-            if requisition_type == 'blanket_order':
-                vals['name'] = self.env['ir.sequence'].with_company(company_id).next_by_code('purchase.requisition.blanket.order')
-            else:
-                vals['name'] = self.env['ir.sequence'].with_company(company_id).next_by_code('purchase.requisition.purchase.template')
+            if not vals.get('name') or vals['name'] == _('New'): # <-- added
+                if requisition_type == 'blanket_order':
+                    vals['name'] = self.env['ir.sequence'].with_company(company_id).next_by_code('purchase.requisition.blanket.order')
+                else:
+                    vals['name'] = self.env['ir.sequence'].with_company(company_id).next_by_code('purchase.requisition.purchase.template')
         return super().create(vals_list)
 
     def write(self, vals):
